@@ -31,7 +31,7 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		File file = new File("100tusen.txt");
+		File file = new File("mysudokumister.txt");
 		BufferedReader buffReader = new BufferedReader(new FileReader(file));
 		
 		double highestDifficulty = 1;

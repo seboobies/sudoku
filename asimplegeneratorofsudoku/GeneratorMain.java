@@ -7,9 +7,13 @@ import parsingstuff.Parser;
 
 import diuf.sudoku.Grid;
 import diuf.sudoku.solver.Solver;
+import diuf.sudoku.solver.checks.BruteForceAnalysis;
 
 public class GeneratorMain {
 
+	private final static BruteForceAnalysis analyser = new BruteForceAnalysis(true);
+	
+	
 	/**
 	 * @param args
 	 */
@@ -36,6 +40,7 @@ public class GeneratorMain {
 						int x = random.nextInt(9);
 						int y = random.nextInt(9);
 						solver.rebuildPotentialValues();
+						
 						if(grid.getCell(x, y).hasPotentialValue(numberToPlace)){
 							grid.setCellValue(x, y, numberToPlace);
 							placed = true;
@@ -45,11 +50,11 @@ public class GeneratorMain {
 					//System.out.println(numberToPlace);
 				}
 			}
-			//System.out.println("Grid completed");
-			if(solver.checkValidity() == null){
-				success = true;
-			}
-			if(numberOfTries%1000 == 0){
+			 int state = analyser.getCountSolutions(grid);
+			 if(state == 1){
+				 success = true;
+			 }
+			if(numberOfTries%10 == 0){
 				System.out.println("Number of tries:" + numberOfTries);
 			}
 			numberOfTries++;
@@ -57,6 +62,7 @@ public class GeneratorMain {
 		
 		Parser parser = new Parser();
 		System.out.println(parser.parseGridToLine(grid));
+		
 		System.out.println(solver.getDifficulty());
 		
 		
